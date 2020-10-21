@@ -59,7 +59,7 @@ async function derive(topic, steps, siteNum) {
     topic = topic.replace(" ", "+")
     let quotes = []
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     const page = await browser.newPage();
 
     await page.goto(`${GoogleURL}/search?q=${topic}`);
