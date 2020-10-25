@@ -1,0 +1,8 @@
+{
+    "sheets": {
+        "minStep": 1,
+        "maxStep": 3,
+        "minSite": 0,
+        "maxSite": 10
+    }
+}

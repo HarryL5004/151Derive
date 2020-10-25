@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "compile-css": "sass --no-source-map ./public/stylesheets/css.scss:./public/stylesheets/style.css"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -17,5 +18,9 @@
   },
   "engines": {
     "node": "12.14.1"
+  },
+  "devDependencies": {
+    "config": "^3.3.2",
+    "sass": "^1.27.0"
   }
 }

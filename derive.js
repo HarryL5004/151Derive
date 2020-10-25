@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
 
 const GoogleURL = "https://www.google.com"
 
@@ -55,12 +55,9 @@ async function getQuote(page) {
     })
 }
 
-async function derive(topic, steps, siteNum) {
+async function derive(page, topic, steps, siteNum) {
     topic = topic.replace(" ", "+")
     let quotes = []
-
-    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
-    const page = await browser.newPage();
 
     await page.goto(`${GoogleURL}/search?q=${topic}`);
     let pages = await getPages(page);
@@ -76,7 +73,6 @@ async function derive(topic, steps, siteNum) {
         quotes.push(await getQuote(page));
     }
     
-    await browser.close();
     return quotes
 }
 
