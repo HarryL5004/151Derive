@@ -4,5 +4,11 @@
         "maxStep": 3,
         "minSite": 0,
         "maxSite": 10
+    },
+    "Google": {
+        "url": "https://www.google.com"
+    },
+    "timeout": {
+        "milliseconds": 60000
     }
 }

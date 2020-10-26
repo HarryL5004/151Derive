@@ -1,6 +1,4 @@
-// const puppeteer = require("puppeteer");
-
-const GoogleURL = "https://www.google.com"
+const config = require("config");
 
 function randomInt(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
@@ -56,6 +54,7 @@ async function getQuote(page) {
 }
 
 async function derive(page, topic, steps, siteNum) {
+    const GoogleURL =  config.get("Google.url");
     topic = topic.replace(" ", "+")
     let quotes = []
 

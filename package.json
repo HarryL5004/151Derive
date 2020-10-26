@@ -3,8 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "compile-css": "sass --no-source-map ./public/stylesheets/css.scss:./public/stylesheets/style.css"
+    "start": "nodemon ./bin/www",
+    "compile-css": "npm run compile-sheets & npm run compile-drive & npm run compile-docs & npm run compile-calendar & npm run compile-search",
+    "compile-sheets": "sass --no-source-map ./public/stylesheets/sheets.scss:./public/stylesheets/css/sheets.css",
+    "compile-drive":"sass --no-source-map ./public/stylesheets/drive.scss:./public/stylesheets/css/drive.css",
+    "compile-docs":"sass --no-source-map ./public/stylesheets/docs.scss:./public/stylesheets/css/docs.css",
+    "compile-calendar":"sass --no-source-map ./public/stylesheets/calendar.scss:./public/stylesheets/css/calendar.css",
+    "compile-search":"sass --no-source-map ./public/stylesheets/search.scss:./public/stylesheets/css/search.css"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
