@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "start-dev": "nodemon ./bin/www",
     "compile-css": "npm run compile-sheets & npm run compile-drive & npm run compile-docs & npm run compile-calendar & npm run compile-search",
     "compile-sheets": "sass --no-source-map ./public/stylesheets/sheets.scss:./public/stylesheets/css/sheets.css",
     "compile-drive":"sass --no-source-map ./public/stylesheets/drive.scss:./public/stylesheets/css/drive.css",
