@@ -34,38 +34,67 @@ router.use(async(req, res, next) => {
 })
 
 router.get('/', async(req, res, next) => {
-  let topic = "Google Sheets";
-  let quotes = await getQuotes(page, topic);
-  res.render('sheets', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "sheets.css"});
+  try {
+    let topic = "Google Sheets";
+    let quotes = await getQuotes(page, topic);
+    res.render('sheets', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "sheets.css"});
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/drive', async(req, res, next) => {
-  let topic = "Google Drive";
-  let quotes = await getQuotes(page, topic);
-  res.render('drive', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "drive.css"});
+  try {
+    let topic = "Google Drive";
+    let quotes = await getQuotes(page, topic);
+    res.render('drive', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "drive.css"});
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/docs', async(req, res, next) => {
-  let topic = "Google Docs";
-  let quotes = await getQuotes(page, topic);
-  res.render('docs', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "docs.css"});
+  try {
+    let topic = "Google Docs";
+    let quotes = await getQuotes(page, topic);
+    res.render('docs', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "docs.css"});
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/calendar', async(req, res, next) => {
-  let topic = "Google Calendar";
-  let quotes = await getQuotes(page, topic);
-  res.render('calendar', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "calendar.css"});
+  try {
+    let topic = "Google Calendar";
+    let quotes = await getQuotes(page, topic);
+    res.render('calendar', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "calendar.css"});
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/search', async(req, res, next) => {
-  let topic = "Google Search";
-  let quotes = await getQuotes(page, topic);
-  res.render('search', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "search.css"});
+  try {
+    let topic = "Google Search";
+    let quotes = await getQuotes(page, topic);
+    res.render('search', {quote1: quotes[0], quote2: quotes[1], quote3: quotes[2], style: "search.css"});
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get('/debug', (req, res, next) => {
   res.render('search', {quote1: "hello", quote2: "world", quote3: "foo", style: "search.css"});
+});
+
+router.use((req, res, next) => {
+  res.render('search', {quote1: "404", quote2: "Request Not Found!", style: "search.css"});
 })
+
+router.use((err, req, res, next) => {
+  res.render('search', {quote1: "Failed to load your request.", quote2: err.toString()+".",
+  quote3: "Please reload this page.", style: "search.css"});
+});
 
 process.on('SIGTERM', async () => {
   console.info("Shutting down...");
