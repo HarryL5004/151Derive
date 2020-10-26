@@ -20,13 +20,13 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "config": "^3.3.2",
     "puppeteer": "^5.3.1"
   },
   "engines": {
     "node": "12.14.1"
   },
   "devDependencies": {
-    "config": "^3.3.2",
     "sass": "^1.27.0"
   }
 }
