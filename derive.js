@@ -36,10 +36,11 @@ async function getQuote(page) {
     return await page.evaluate(() => {
         let pTags = document.querySelectorAll("p");
         if (pTags.length == 0)
-            return "...";
+            return null;
 
-        let text = pTags[Math.floor(pTags.length/2)].innerText;
-        let splittedText = text.split(". ");
+        let randomP = Math.floor(Math.random()*(pTags.length/2+1));
+        let text = pTags[randomP].innerText;
+        let splittedText = text.split(/(\.[A-Z]+)|(\. )|([!?;])/);
 
         let index = Math.floor(pTags.length/2);
         let quote = splittedText[0];
@@ -53,25 +54,45 @@ async function getQuote(page) {
     })
 }
 
+async function pageScrap(page, googleURL, pageURL, siteNum) {
+    await page.goto(`${googleURL}${pageURL}`)
+    let sites = await getSites(page);
+
+    let siteURL = siteNum < sites.length ? sites[siteNum] : sites[randomInt(0,Math.floor(sites.length/2))]
+    
+    if (siteURL.includes(".pdf")) {
+        siteNum = siteNum == 0 ? siteNum+1 : siteNum-1;
+        return pageScrap(page, googleURL, pageURL, siteNum)
+    }
+    await page.goto(siteURL)
+
+    let quote = await getQuote(page)
+    if (quote == null) {
+        siteNum = siteNum == 0 ? siteNum+1 : siteNum-1;
+        return pageScrap(page, googleURL, pageURL, siteNum)
+    }
+    return quote;
+    
+}
+
 async function derive(page, topic, steps, siteNum) {
-    const GoogleURL =  config.get("Google.url");
+    const googleURL =  config.get("Google.url");
     topic = topic.replace(" ", "+")
     let quotes = []
+    let stepsArr = Array(3).fill(0).map((v,i)=>(i));
 
-    await page.goto(`${GoogleURL}/search?q=${topic}`);
+    await page.goto(`${googleURL}/search?q=${topic}`);
     let pages = await getPages(page);
 
-    for (const i of Array(3).keys()) {
-        let pageURL = steps < pages.length ? pages[steps*i] : pages[randomInt(0, Math.floor(pages.length/2))]
-        await page.goto(`${GoogleURL}${pageURL}`)
-        let sites = await getSites(page);
-    
-        let siteURL = siteNum < sites.length ? sites[siteNum] : sites[randomInt(0,Math.floor(sites.length/2))]
-        await page.goto(siteURL)
+    let pageURL = steps < pages.length ? pages[steps*stepsArr[0]] : pages[randomInt(0, Math.floor(pages.length/2))]
+    quotes.push(await pageScrap(page, googleURL, pageURL, siteNum));
 
-        quotes.push(await getQuote(page));
-    }
-    
+    pageURL = steps < pages.length ? pages[steps*stepsArr[1]] : pages[randomInt(0, Math.floor(pages.length/2))]
+    quotes.push(await pageScrap(page, googleURL, pageURL, siteNum));
+
+    pageURL = steps < pages.length ? pages[steps*stepsArr[2]] : pages[randomInt(0, Math.floor(pages.length/2))]
+    quotes.push(await pageScrap(page, googleURL, pageURL, siteNum));
+
     return quotes
 }
 

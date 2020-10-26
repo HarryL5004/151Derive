@@ -1,9 +1,9 @@
 {
-    "sheets": {
-        "minStep": 1,
-        "maxStep": 3,
-        "minSite": 0,
-        "maxSite": 10
+    "apps": {
+        "stepMin": 1,
+        "stepMax": 3,
+        "siteMin": 0,
+        "siteMax": 10
     },
     "Google": {
         "url": "https://www.google.com"
