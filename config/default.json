@@ -9,6 +9,6 @@
         "url": "https://www.google.com"
     },
     "timeout": {
-        "milliseconds": 60000
+        "milliseconds": 29000
     }
 }
