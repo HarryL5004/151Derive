@@ -40,7 +40,7 @@ async function getQuote(page) {
 
         let randomP = Math.floor(Math.random()*(pTags.length/2+1));
         let text = pTags[randomP].innerText;
-        let splittedText = text.split(/(\.[A-Z]+)|(\. )|([!?;])/);
+        let splittedText = text.split(/(\.[A-Z]+)|(\. [A-Z]+)|([!?;])/);
 
         let index = Math.floor(pTags.length/2);
         let quote = splittedText[0];
